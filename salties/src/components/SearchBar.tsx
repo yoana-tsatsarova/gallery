@@ -4,7 +4,7 @@ import Gallery from "./Gallery.tsx";
 
 const SearchBar = () => {
     const inputEl = useRef<HTMLInputElement>(null);
-    const [userInput, setUserInput] = useState("")
+    const [userInput, setUserInput] = useState("tesla")
 
     const onSubmit = () => {
         console.log(inputEl.current?.value)
