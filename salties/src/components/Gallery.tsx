@@ -1,21 +1,20 @@
 import {useEffect, useState} from "react";
-import SearchBar from "./SearchBar.tsx";
-
 
 type GalleryProps = {
     userInput: string
 }
+
 const Gallery = (props: GalleryProps) => {
     const [img, setImg] = useState("");
     const [res, setRes] = useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
     const accessKey = "wWLIeAHU1Jd-qMLOxRXb8vV3gRpK1RWCOfhY6IkXg0E"
 
     useEffect(() => {
-
         setImg(props.userInput);
         const fetchRequest = async () => {
             const data = await fetch(
-                `https://api.unsplash.com/search/photos?page=1&query=${img}&client_id=${accessKey}`
+                `https://api.unsplash.com/search/photos?page=${pageNumber}&query=${img}&client_id=${accessKey}`
             );
             const dataJ = await data.json();
             const result = dataJ.results;
@@ -24,10 +23,24 @@ const Gallery = (props: GalleryProps) => {
         };
 
         fetchRequest();
-    }, [res])
+    }, [res, pageNumber])
+
+    const goToPreviousPage = () => {
+        if (pageNumber > 1) {
+            setPageNumber(previousNumber => previousNumber - 1)
+        }
+    }
+
+    const goToNextPage = () => {
+        setPageNumber(previousNumber => previousNumber + 1)
+    }
+
 
 
     return (
+        <>
+        <button onClick={goToPreviousPage}>Previous</button>
+        <button onClick={goToNextPage}>Next</button>
         <div>
             {(res.map((val, index) => {
                 return (
@@ -43,6 +56,7 @@ const Gallery = (props: GalleryProps) => {
                 );
             }))}
         </div>
+            </>
     )
 };
 

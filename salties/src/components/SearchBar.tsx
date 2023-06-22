@@ -1,14 +1,16 @@
-import {Form,} from "react-bootstrap";
-import React, {useRef, useState} from "react";
-import Gallery from "./Gallery.tsx";
+import {useRef} from "react";
 
-const SearchBar = () => {
+type SearchBarProps = {
+    getUserInput: any;
+}
+const SearchBar = (props: SearchBarProps) => {
     const inputEl = useRef<HTMLInputElement>(null);
-    const [userInput, setUserInput] = useState("tesla")
 
     const onSubmit = () => {
         console.log(inputEl.current?.value)
-       setUserInput(inputEl.current?.value)
+        props.getUserInput(inputEl.current?.value)
+
+
     };
     return (
         <>
@@ -20,7 +22,6 @@ const SearchBar = () => {
             //onSubmit={onSubmit}
         />
         <button onClick={onSubmit}>Search</button>
-            <Gallery userInput={userInput} />
         </>
     )
 }
