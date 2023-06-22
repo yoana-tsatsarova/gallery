@@ -1,16 +1,17 @@
-import {useRef} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+
 
 type SearchBarProps = {
     getUserInput: any;
 }
 const SearchBar = (props: SearchBarProps) => {
     const inputEl = useRef<HTMLInputElement>(null);
+    const [query, setQuery] = useState("")
 
     const onSubmit = () => {
         console.log(inputEl.current?.value)
         props.getUserInput(inputEl.current?.value)
-
-
+        setQuery(inputEl.current?.value)
     };
     return (
         <>
@@ -19,9 +20,8 @@ const SearchBar = (props: SearchBarProps) => {
             type="text"
             placeholder="Search"
             ref={inputEl}
-            //onSubmit={onSubmit}
         />
-        <button onClick={onSubmit}>Search</button>
+            <button onClick={onSubmit}>Search</button>
         </>
     )
 }
